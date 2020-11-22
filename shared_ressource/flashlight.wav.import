@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/flashlight.wav-ff0d7c93360f06a6913e1367389ad434.sample"
+
+[deps]
+
+source_file="res://shared_ressource/flashlight.wav"
+dest_files=[ "res://.import/flashlight.wav-ff0d7c93360f06a6913e1367389ad434.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

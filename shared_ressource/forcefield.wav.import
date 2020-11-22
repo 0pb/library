@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/forcefield.wav-7b238b169a266d22af84b852894d5eb1.sample"
+
+[deps]
+
+source_file="res://shared_ressource/forcefield.wav"
+dest_files=[ "res://.import/forcefield.wav-7b238b169a266d22af84b852894d5eb1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://shared_ressource/light.png" type="Texture" id=1]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+
+[node name="Spell_light" type="Light2D"]
+show_behind_parent = true
+light_mask = 3
+material = SubResource( 1 )
+texture = ExtResource( 1 )
+texture_scale = 0.6
+color = Color( 0.996078, 0.623529, 0.34902, 1 )
+energy = 0.9
+range_item_cull_mask = 3
+shadow_enabled = true
+shadow_item_cull_mask = -2147483643

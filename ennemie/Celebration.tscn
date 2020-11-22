@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.590698, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 180.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 30.0
+scale_random = 1.0
+scale_curve = SubResource( 3 )
+color = Color( 1, 0, 0, 1 )
+hue_variation = 1.0
+hue_variation_random = 1.0
+
+[node name="Celebration" type="Particles2D"]
+material = SubResource( 1 )
+emitting = false
+amount = 80
+explosiveness = 0.4
+local_coords = false
+process_material = SubResource( 4 )

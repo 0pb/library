@@ -1,0 +1,123 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://shared_ressource/sprites/perso.png" type="Texture" id=1]
+[ext_resource path="res://player/Player.gd" type="Script" id=2]
+[ext_resource path="res://player/Lumos.gd" type="Script" id=3]
+[ext_resource path="res://player/Fireball_spell.gd" type="Script" id=4]
+[ext_resource path="res://shared_ressource/flashlight.wav" type="AudioStream" id=5]
+[ext_resource path="res://shared_ressource/footsteps.wav" type="AudioStream" id=6]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( 5.25, -25.75, -3.75, -25.5, -9, -10.25, -3.25, 8.75, 4.75, 8.75, 10, -10.25 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 192, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 256, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 320, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 6.0
+} ]
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 31.2185
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 31.375, 31.5757 )
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 3
+script = ExtResource( 2 )
+remote_transform = NodePath("RemoteTransform2D")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+show_behind_parent = true
+light_mask = 2
+position = Vector2( -0.75, 10.25 )
+occluder = SubResource( 1 )
+light_mask = 2
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 1 )
+hframes = 6
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 8 )
+frame = 2
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 9 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
+[node name="State" type="Node" parent="."]
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource( 10 )
+
+[node name="Spells" type="Node" parent="."]
+
+[node name="Lumos_spell" type="Node" parent="Spells"]
+script = ExtResource( 3 )
+
+[node name="Flashlight" type="AudioStreamPlayer" parent="Spells/Lumos_spell"]
+stream = ExtResource( 5 )
+volume_db = -6.0
+
+[node name="Fireball_spell" type="Node" parent="Spells"]
+script = ExtResource( 4 )
+
+[node name="Cooldown" type="Timer" parent="Spells/Fireball_spell"]
+process_mode = 0
+one_shot = true
+
+[node name="Tween" type="Tween" parent="Spells/Fireball_spell"]
+
+[node name="Spawner" type="Position2D" parent="."]
+position = Vector2( 34, 0 )
+
+[node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Spawner"]
+remote_path = NodePath("../..")
+update_rotation = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -4.374
+pitch_scale = 0.82
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="."]
+[connection signal="fireball" from="." to="Spells/Fireball_spell" method="_on_Player_fireball"]
+[connection signal="lumos" from="." to="Spells/Lumos_spell" method="_on_Player_lumos"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="end_of_cooldown" from="Spells/Lumos_spell" to="." method="_on_Lumos_end_of_cooldown"]
+[connection signal="end_of_cooldown" from="Spells/Fireball_spell" to="." method="_on_Fireball_spell_end_of_cooldown"]
+[connection signal="timeout" from="Spells/Fireball_spell/Cooldown" to="Spells/Fireball_spell" method="_on_Cooldown_timeout"]

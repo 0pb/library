@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://menu_and_ui/Control.tscn" type="PackedScene" id=2]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+background_color = Color( 0.603922, 0.603922, 0.603922, 1 )
+ambient_light_color = Color( 0.717647, 0.258824, 0.258824, 1 )
+auto_exposure_max_luma = 0.8
+glow_enabled = true
+glow_levels/4 = true
+glow_intensity = 5.0
+glow_strength = 1.5
+glow_bloom = 0.2
+glow_hdr_threshold = 0.81
+glow_hdr_scale = 1.0
+glow_bicubic_upscale = true
+adjustment_enabled = true
+adjustment_saturation = 0.8
+
+[node name="MainNode" type="Node"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Control" parent="." instance=ExtResource( 2 )]
+
+[node name="TimeInGame" type="Timer" parent="."]
+wait_time = 3600.0
